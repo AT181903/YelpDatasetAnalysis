@@ -1,6 +1,7 @@
-import pickle
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
+
+import predict
 
 app = Flask(__name__)
 CORS(app)
@@ -13,7 +14,14 @@ def home_page():  # put application's code here
 
 @app.route('/predict_review', methods=(['GET']))
 def predict_review():
-    return "To predict_review"
+    query_param = request.args.to_dict()
+
+    review = query_param.get("review")
+
+    if predict.review(review)[0] == 0:
+        return "Bad review"
+    else:
+        return "Good review"
 
 
 if __name__ == '__main__':
