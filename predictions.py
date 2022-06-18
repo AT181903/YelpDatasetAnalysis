@@ -3,7 +3,7 @@ import pandas as pd
 import text_processing
 
 
-def review(review):
+def predict_review(review):
     df_review = pd.DataFrame([review], columns=['text'])
 
     text_processing.process_text(df_review)

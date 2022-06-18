@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 
-import predict
+import predictions
 
 app = Flask(__name__)
 CORS(app)
@@ -18,7 +18,7 @@ def predict_review():
 
     review = query_param.get("review")
 
-    if predict.review(review)[0] == 0:
+    if predictions.predict_review(review)[0] == 0:
         return "Bad review"
     else:
         return "Good review"
