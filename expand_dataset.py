@@ -1,7 +1,5 @@
-import json
+import ast
 
-def string_to_dict(string):
-    return json.loads(string.replace("'", '"'))
 
 def expand(row, dict):
     for key, values in dict.items():
@@ -10,7 +8,21 @@ def expand(row, dict):
 
 
 def expand_hours_feature(row):
-    return expand(row, string_to_dict(row['hours']))
+    try:
+        return expand(row, ast.literal_eval(row['hours']))
+    except:
+        return row
 
 def expand_attributes_feature(row):
-    return expand(row, string_to_dict(row['attributes']))
+    # print(row['attributes'])
+    try:
+        return expand(row, ast.literal_eval(row['attributes']))
+    except:
+        return row
+
+
+def expand_business_parking_feature(row):
+    try:
+        return expand(row, ast.literal_eval(row['BusinessParking']))
+    except:
+        return row
