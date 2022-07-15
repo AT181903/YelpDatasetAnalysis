@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 
-import predictions
+from utils import predictions
 
 app = Flask(__name__)
 CORS(app)
