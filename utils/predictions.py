@@ -9,12 +9,12 @@ def predict_review(review):
 
     text_processing.process_text(df_review)
 
-    vectorizer = pickle.load(open('../models/vectorizer.pkl', 'rb'))
+    vectorizer = pickle.load(open('/Users/at181903/PycharmProjects/IAproject/models/vectorizer.pkl', 'rb'))
 
     vectorized_review = pd.DataFrame(columns=vectorizer.get_feature_names_out(),
                                      data=vectorizer.transform(df_review["processed_text"]).toarray())
 
-    svc_model = pickle.load(open('../models/svc_model.pkl', 'rb'))
+    svc_model = pickle.load(open('/Users/at181903/PycharmProjects/IAproject/models/svc_model.pkl', 'rb'))
 
     review_prediction = svc_model.predict(vectorized_review)
 
