@@ -1,10 +1,12 @@
 from itertools import combinations
 
+import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
+from sklearn.neighbors import NearestNeighbors
 
 
 def score_plot_and_get_best(data_frame, algorithm, number_of_tests):
@@ -67,18 +69,25 @@ def score_plot_and_get_best(data_frame, algorithm, number_of_tests):
     return labels.get(best_parameter)
 
 
+# def add_new_column(algorithm, df_new_column, initial_data_frame):
+#     if algorithm == 'kmeans':
+#         df_new_column = pd.DataFrame({'cluster': df_new_column})
+#     else:
+#         df_new_column = pd.DataFrame({'eps': df_new_column})
+#
+#     # return pd.concat([initial_data_frame, df_new_column], axis=1)
+#
+#     return pd.concat([initial_data_frame.reset_index(drop=True), df_new_column.reset_index(drop=True)], axis=1)
+
 def add_new_column(algorithm, df_new_column, initial_data_frame):
     if algorithm == 'kmeans':
         df_new_column = pd.DataFrame({'cluster': df_new_column})
     else:
         df_new_column = pd.DataFrame({'eps': df_new_column})
 
-
-    initial_data_frame = pd.concat([initial_data_frame, df_new_column], axis=1)
-
-    initial_data_frame.head(50)
-
-    return initial_data_frame
+    # df_new_column.reset_index()
+    # initial_data_frame.reset_index()
+    return pd.concat([initial_data_frame.reset_index(drop=True), df_new_column.reset_index(drop=True)], axis=1)
 
 
 def plot_clusters(algorithm, data_frame, num_row, num_col, fig_width, fig_height):
@@ -112,3 +121,37 @@ def plot_clusters(algorithm, data_frame, num_row, num_col, fig_width, fig_height
             next_column = 0
         else:
             next_column = next_column + 1
+
+
+### Utils for DB Scan
+def get_distances_and_plot(data_frame):
+    nbrs = NearestNeighbors(n_neighbors=10, metric='cosine').fit(data_frame)
+    distances, indices = nbrs.kneighbors(data_frame)
+    distances = distances[:, 2]
+    distances = np.sort(distances, axis=0)
+
+    show_plot(distances)
+
+    return distances
+
+
+def filter_distances_and_plot(distances, filter, filter2):
+    if (filter2 == None):
+        distances = [x for x in distances if x > filter]
+    else:
+        distances = [x for x in distances if filter > x > filter2]
+
+    show_plot(distances)
+
+    return distances
+
+
+def remove_duplicates(distances):
+    no_duplicate_distances = list(dict.fromkeys(distances))
+    show_plot(no_duplicate_distances)
+    return no_duplicate_distances
+
+
+def show_plot(distances):
+    plt.plot(distances)
+    plt.show()
