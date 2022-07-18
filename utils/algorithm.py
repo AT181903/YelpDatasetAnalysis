@@ -123,7 +123,7 @@ def plot_clusters(algorithm, data_frame, num_row, num_col, fig_width, fig_height
             next_column = next_column + 1
 
 
-### Utils for DB Scan
+# Utils for DB Scan
 def get_distances_and_plot(data_frame):
     nbrs = NearestNeighbors(n_neighbors=10, metric='cosine').fit(data_frame)
     distances, indices = nbrs.kneighbors(data_frame)
