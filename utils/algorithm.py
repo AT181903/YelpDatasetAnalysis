@@ -15,7 +15,6 @@ def score_plot_and_get_best(data_frame, algorithm, number_of_tests):
     else:
         parameter_to_detect = "eps"
 
-    # fitted_kmeans = {}
     labels = {}
     df_scores = []
     inertias_for_kmeans = []
@@ -32,7 +31,6 @@ def score_plot_and_get_best(data_frame, algorithm, number_of_tests):
             inertias_for_kmeans.append(model.inertia_)
 
         # Insert fitted model and calculated cluster labels in dictionaries, for further reference.
-        # fitted_kmeans[i] = kmeans
         labels[i] = i_labels
 
         # Calculate various scores, and save them for further reference.
@@ -64,20 +62,12 @@ def score_plot_and_get_best(data_frame, algorithm, number_of_tests):
 
     best_parameter = max(set(best_scores_list), key=best_scores_list.count)
 
-    print("Best " + parameter_to_detect + ": ", best_parameter)
+    df_for_best_parameter = labels.get(best_parameter)
 
-    return labels.get(best_parameter)
+    print("Best ", parameter_to_detect, ":", best_parameter)
 
+    return df_for_best_parameter
 
-# def add_new_column(algorithm, df_new_column, initial_data_frame):
-#     if algorithm == 'kmeans':
-#         df_new_column = pd.DataFrame({'cluster': df_new_column})
-#     else:
-#         df_new_column = pd.DataFrame({'eps': df_new_column})
-#
-#     # return pd.concat([initial_data_frame, df_new_column], axis=1)
-#
-#     return pd.concat([initial_data_frame.reset_index(drop=True), df_new_column.reset_index(drop=True)], axis=1)
 
 def add_new_column(algorithm, df_new_column, initial_data_frame):
     if algorithm == 'kmeans':
@@ -85,8 +75,6 @@ def add_new_column(algorithm, df_new_column, initial_data_frame):
     else:
         df_new_column = pd.DataFrame({'eps': df_new_column})
 
-    # df_new_column.reset_index()
-    # initial_data_frame.reset_index()
     return pd.concat([initial_data_frame.reset_index(drop=True), df_new_column.reset_index(drop=True)], axis=1)
 
 
@@ -115,6 +103,8 @@ def plot_clusters(algorithm, data_frame, num_row, num_col, fig_width, fig_height
         )
 
         axis[next_row, next_column].set_title(first_feature + " and " + second_feature)
+        axis[next_row, next_column].set_xlabel(first_feature)
+        axis[next_row, next_column].set_ylabel(second_feature)
 
         if next_column == (num_col - 1):
             next_row = next_row + 1
