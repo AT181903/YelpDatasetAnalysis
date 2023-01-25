@@ -1,0 +1,47 @@
+.container-fluid{
+    padding: 25px;
+}
+
+h1 {
+    color: red !important;
+    font-size: 30em;
+    font-family: "Times New Roman", serif;
+}
+
+h2 {
+    margin-top: 1em;
+    font-family: "Times New Roman", serif;
+}
+
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 22px;
+    font-family: "Times New Roman", serif;
+}
+
+#predict-button {
+    width: 6em;
+    height: 2em;
+    font-size: 18px;
+    margin-top: 1em;
+    font-family: "Times New Roman", serif;
+}
+
+#prediction {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 1em;
+    font-family: "Times New Roman", serif;
+}
+
+#container-reviews{
+    margin-top: 2.5em;
+}
+
+.card{
+    margin-top: 0.5em;
+    border-width: medium !important;
+}
